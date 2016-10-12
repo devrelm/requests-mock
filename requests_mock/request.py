@@ -154,6 +154,10 @@ class _RequestObjectProxy(object):
     def json(self, **kwargs):
         return json.loads(self.text, **kwargs)
 
+    def form(self, **kwargs):
+        kwargs.setdefault('strict_parsing', True)
+        return urlparse.parse_qs(self.text, **kwargs)
+
     def __getstate__(self):
         # Can't pickle a weakref, but it's a weakref so ok to drop it.
         d = self.__dict__.copy()
